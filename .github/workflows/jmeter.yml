@@ -25,13 +25,11 @@ jobs:
 
       - name: Download JMeter Plugins Manager
         run: |
-          mkdir -p ~/.jmeter
-          curl -sL https://jmeter-plugins.org/get/ -o ~/.jmeter/plugins-manager.jar
+          curl -sL https://jmeter-plugins.org/get/ -o apache-jmeter-5.6.3/lib/ext/jmeter-plugins-manager.jar
 
       - name: Install Required JMeter Plugins
         run: |
-          java -jar ~/.jmeter/plugins-manager.jar install jpgc-correctedresultcollector
-
+          apache-jmeter-5.6.3/bin/PluginsManagerCMD.sh install jpgc-correctedresultcollector
 
       - name: Run JMeter Test
         run: |
