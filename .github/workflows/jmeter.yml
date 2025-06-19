@@ -1,0 +1,33 @@
+name: JMeter Load Test
+
+on: [push, workflow_dispatch]
+
+jobs:
+  run-jmeter:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '11'
+
+      - name: Install JMeter
+        run: |
+          sudo apt update
+          sudo apt install -y jmeter
+
+      - name: Run JMeter Test
+        run: |
+          mkdir results
+          jmeter -n -t task_1.jmx -l results/results.jtl -e -o results/html
+
+      - name: Upload HTML Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: jmeter-html-report
+          path: results/html
