@@ -30,8 +30,8 @@ jobs:
 
       - name: Install Required JMeter Plugins
         run: |
-          java -cp ~/.jmeter/plugins-manager.jar org.jmeterplugins.repository.PluginManagerCMDInstaller
           java -jar ~/.jmeter/plugins-manager.jar install jpgc-correctedresultcollector
+
 
       - name: Run JMeter Test
         run: |
