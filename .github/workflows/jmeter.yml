@@ -16,15 +16,17 @@ jobs:
           distribution: 'temurin'
           java-version: '11'
 
-      - name: Install JMeter
+      - name: Download and extract JMeter
         run: |
-          sudo apt update
-          sudo apt install -y jmeter
+          curl -sL https://downloads.apache.org//jmeter/binaries/apache-jmeter-5.6.3.tgz | tar xz
+          echo "JMETER_HOME=$PWD/apache-jmeter-5.6.3" >> $GITHUB_ENV
+          echo "$PWD/apache-jmeter-5.6.3/bin" >> $GITHUB_PATH
 
       - name: Run JMeter Test
         run: |
-          mkdir results
+          mkdir -p results
           jmeter -n -t task_1.jmx -l results/results.jtl -e -o results/html
+
 
       - name: Upload HTML Report
         uses: actions/upload-artifact@v4
